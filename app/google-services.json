@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "265623031324",
+    "firebase_url": "https://patephone-9d6fe-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "patephone-9d6fe",
+    "storage_bucket": "patephone-9d6fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265623031324:android:488ac86d234a2da10c59d9",
+        "android_client_info": {
+          "package_name": "dev.fest.patephone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265623031324-7nbjb2pdl9al46g0d2bqt1t1bpifk93r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.fest.patephone",
+            "certificate_hash": "d2962af94b20927c1660c5ac6a8675282096a110"
+          }
+        },
+        {
+          "client_id": "265623031324-s0b028avtpns61s9c4b2shglufsv27pu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.fest.patephone",
+            "certificate_hash": "5e40c042ba3271544d8c110dad9f293169bfb91e"
+          }
+        },
+        {
+          "client_id": "265623031324-a5k0pmtm55hiculgchidgv1lngmpdrig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATVD-JNCpOK9l8vmw4NRJlTEN791rNDz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265623031324-a5k0pmtm55hiculgchidgv1lngmpdrig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

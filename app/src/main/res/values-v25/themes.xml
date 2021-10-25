@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style xmlns:android="http://schemas.android.com/apk/res/android" name="Default">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorSecondary">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="myWindowBackground">@color/backgroundColor</item>
+        <item name="myTabBackgroundColor">@color/tabBackgroundColor</item>
+        <item name="myTabTextColor">@color/tabTextColor</item>
+        <item name="myTabTextSelectedColor">@color/tabTextSelectedColor</item>
+        <item name="myTabIndicatorColor">@color/tabIndicatorColor</item>
+        <item name="myPrimaryTextColor">@color/primaryText</item>
+        <item name="mySecondaryTextColor">@color/secondaryText</item>
+        <item name="android:theme">@style/Default</item>
+    </style>
+</resources>

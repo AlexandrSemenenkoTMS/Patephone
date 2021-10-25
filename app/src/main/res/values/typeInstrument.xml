@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="typeInstrument">
+        <item>Гитары</item>
+        <item>Клавишные</item>
+        <item>Струнные</item>
+        <item>Ударные</item>
+        <item>Духовые</item>
+        <item>Аксессуары</item>
+        <item>Прочее</item>
+    </string-array>
+</resources>

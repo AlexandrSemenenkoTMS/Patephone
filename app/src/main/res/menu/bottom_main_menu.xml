@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item
+    android:id="@+id/id_home"
+    android:title="all"
+    android:icon="@drawable/ic_home"
+    android:orderInCategory="100"/>
+<item
+    android:id="@+id/id_fav"
+    android:title="fav"
+    android:icon="@drawable/ic_favourite_normal"
+    android:orderInCategory="200"/>
+<item
+    android:id="@+id/id_add"
+    android:title="new add"
+    android:icon="@drawable/ic_menu_add"
+    android:orderInCategory="300"/>
+
+    <item
+    android:id="@+id/id_chat"
+    android:title="chat"
+    android:icon="@drawable/ic_menu_chat"
+    android:orderInCategory="400"/>
+    <item
+    android:id="@+id/id_account"
+    android:title="account"
+    android:icon="@drawable/ic_menu_account"
+    android:orderInCategory="500"/>
+</menu>

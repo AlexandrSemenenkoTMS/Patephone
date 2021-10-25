@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Patephone</string>
+    <!--Menu Drawer Strings-->
+    <string name="ad_cat1">Объявления</string>
+    <string name="ad_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_id_inter">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="ad_my_ads">Мои объявления</string>
+    <string name="ad_all_ads">Все объявления</string>
+    <string name="ad_title_sale">Музыкальные инструменты</string>
+    <string name="ad_title_sale_guitar">Гитары</string>
+    <string name="ad_title_sale_keyboards">Клавишные</string>
+    <string name="my_favs">Избранное</string>
+    <string name="ad_cat2">Аккаунт</string>
+    <string name="ad_sign_in">Вход </string>
+    <string name="ad_sign_up">Регистрация</string>
+    <string name="ad_sign_out">Выход</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="not_reg">Зайдите или зарегистрируйтесь!</string>
+    <string name="title_guest">Гость</string>
+
+    <!--Sign Dialog-->
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="sign_in_action">Войти</string>
+    <string name="sign_up_action">Зарегистрироваться</string>
+    <string name="forget_password">Забыли пароль?</string>
+    <string name="sign_up_error">Не удалось зарегистрироваться</string>
+    <string name="send_verification_done">Вы зарегистрировались. Для подтверждения зайдите в почту.</string>
+    <string name="send_verification_error">Забыли пароль? </string>
+    <string name="sign_in_error">Не удалось войти</string>
+    <string name="sign_reset_message">Введите Ваш email для восстановления пароля</string>
+    <string name="email_reset_password_was_sent">Reset Email was sent</string>
+    <string name="link_done">Email успешно подключен к Google аккаунту</string>
+    <string name="entre_to_google_account">Данный e-mail уже зарегистрирован</string>
+    <string name="entre_anonym_done">Вы вошли как Гость</string>
+    <string name="entre_anonym_error">Не удалось войти как Гость</string>
+
+    <!--Edit Activity Ads-->
+    <string name="select_country">*Выберите страну</string>
+    <string name="select_city">*Выберите город</string>
+    <string name="telephone_number">Введите номер телефона</string>
+    <string name="select_type_instrument">*Выберите тип инструмента</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="telephone">Телефон</string>
+    <string name="title_type_instrument">Тип</string>
+    <string name="vacancy">Вакансия</string>
+    <string name="description_instrument">Описание</string>
+    <string name="description_instrument_hint">Введите описание товара</string>
+    <string name="price_instrument">Цена</string>
+    <string name="name_instrument">Наименование</string>
+    <string name="name_instrument_hint">Введите наименование товара</string>
+    <string name="price_instrument_hint">Введите цену товара</string>
+    <string name="button_send_ad">Разместить объявление</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
