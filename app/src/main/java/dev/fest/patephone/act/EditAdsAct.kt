@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.tasks.OnCompleteListener
@@ -120,9 +121,11 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
     fun onClickGetImages(view: View) {
         if (imageAdapter.mainList.size == 0) {
             ImagePicker.getMultiImages(this, 3)
+            Log.d("EditAdsAct", "size 0")
         } else {
             openChooseImageFragment(null)
             chooseImageFragment?.updateAdapterFromEdit(imageAdapter.mainList)
+            Log.d("EditAdsAct", "size not 0")
         }
     }
 

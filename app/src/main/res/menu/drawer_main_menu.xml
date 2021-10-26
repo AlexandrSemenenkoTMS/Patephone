@@ -31,12 +31,6 @@
             <item
                 android:id="@+id/ad_title_sale_keyboards"
                 android:title="@string/ad_title_sale_keyboards" />
-            <item
-                android:id="@+id/ad_title_sale_keyboards"
-                android:title="@string/ad_title_sale_keyboards" />
-            <item
-                android:id="@+id/ad_title_sale_keyboards"
-                android:title="@string/ad_title_sale_keyboards" />
         </menu>
     </item>
 </menu>
