@@ -15,13 +15,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         tool:replace="android:theme">
         <activity
-            android:name=".TabActivity"
-            android:exported="true" />
-        <activity
             android:name=".act.FilterActivity"
-            android:exported="true" />
-        <activity
-            android:name=".act.RegisterFromPhoneActivity"
             android:exported="true" />
         <activity
             android:name=".act.DescriptionAdActivity"

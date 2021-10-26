@@ -58,7 +58,7 @@ class FirebaseViewModel : ViewModel() {
                         )
                     }
                 }
-                liveDataAd.postValue(updatedList)
+                liveDataAd.postValue(updatedList!!)
             }
 
         })
@@ -89,7 +89,7 @@ class FirebaseViewModel : ViewModel() {
             override fun onFinish() {
                 val updatedList = liveDataAd.value
                 updatedList?.remove(ad)
-                liveDataAd.postValue(updatedList)
+                liveDataAd.postValue(updatedList!!)
             }
 
         })
