@@ -26,6 +26,7 @@
                 android:id="@+id/cardAddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/backgroundColor"
                 android:layout_marginTop="5dp"
                 app:cardCornerRadius="5dp">
 
@@ -41,7 +42,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/country"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/primaryText"
                         android:textStyle="bold" />
 
                     <TextView
@@ -50,8 +51,8 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClickSelectCountry"
                         android:padding="10dp"
-                        android:text="@string/select_country"
-                        android:textColor="@color/backgroundColor"
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/colorAccent"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -71,7 +72,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/city"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/primaryText"
                         android:textStyle="bold" />
 
                     <TextView
@@ -80,8 +81,8 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClickSelectCity"
                         android:padding="10dp"
-                        android:text="@string/select_city"
-                        android:textColor="@color/backgroundColor"
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/colorAccent"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -114,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                app:cardBackgroundColor="@android:color/white"
+                android:backgroundTint="@color/backgroundColor"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -129,7 +130,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/title_type_instrument"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/primaryText"
                         android:textStyle="bold" />
 
                     <TextView
@@ -138,8 +139,8 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClickSelectTypeInstrument"
                         android:padding="10dp"
-                        android:text="@string/select_type_instrument"
-                        android:textColor="@color/backgroundColor"
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/colorAccent"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -160,7 +161,7 @@
                         android:layout_marginTop="10dp"
                         android:inputType="number"
                         android:text="@string/price_instrument"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/primaryText"
                         android:textStyle="bold" />
 
                     <EditText
@@ -171,7 +172,7 @@
                         android:ems="10"
                         android:hint="@string/price_instrument_hint"
                         android:padding="10dp"
-                        android:textColor="@color/backgroundColor"
+                        android:textColor="@color/primaryText"
                         android:textColorHint="@color/colorAccent" />
 
                     <LinearLayout
@@ -201,9 +202,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@color/colorPrimary"
                 android:text="Применить фильтр"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/primaryText"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>

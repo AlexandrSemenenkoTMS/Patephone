@@ -38,7 +38,7 @@ class FilterActivity : AppCompatActivity() {
     }
 
 
-    private fun onClickSelectCountry() = with(activityFilterBinding) {
+     fun onClickSelectCountry() = with(activityFilterBinding) {
         textViewSelectCountry.setOnClickListener {
             val listCountry = CityHelper.getAllCountries(this@FilterActivity)
             dialogSpinnerHelper.showSpinnerDialog(
@@ -46,7 +46,7 @@ class FilterActivity : AppCompatActivity() {
                 listCountry,
                 textViewSelectCountry
             )
-            textViewSelectCountry.setTextColor(Color.BLACK)
+            textViewSelectCountry.setTextColor(Color.WHITE)
             if (textViewSelectCity.text.toString() != getString(R.string.select_city)) {
                 textViewSelectCity.setText(R.string.select_city)
             }
@@ -54,7 +54,7 @@ class FilterActivity : AppCompatActivity() {
 
     }
 
-    private fun onClickSelectCity() = with(activityFilterBinding) {
+     fun onClickSelectCity() = with(activityFilterBinding) {
         textViewSelectCity.setOnClickListener {
             val selectedCountry = textViewSelectCountry.text.toString()
             if (selectedCountry != getString(R.string.select_country)) {

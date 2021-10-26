@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseUser
@@ -25,6 +26,9 @@ import dev.fest.patephone.utils.CityHelper
 import dev.fest.patephone.utils.ImageManager.fillImageArray
 import dev.fest.patephone.utils.ImagePicker
 import java.io.ByteArrayOutputStream
+
+import android.widget.ArrayAdapter
+
 
 class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
 
@@ -69,6 +73,7 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
         textViewSelectTypeInstrument.text = ad.type
         editTextNameInstrument.setText(ad.nameInstrument)
         editTextPrice.setText(ad.price)
+//        spinnerSelectTypeMoney.selectedItem = ad.typeMoney
         editTextDescriptionInstrument.setText(ad.description)
         fillImageArray(ad, imageAdapter)
     }
@@ -76,9 +81,12 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
     private fun init() {
         imageAdapter = ImageAdapter()
         activityEditAdsBinding.viewPagerImages.adapter = imageAdapter
+        onClickSelectTypeMoney()
+
     }
 
 //onClicks
+
 
     fun onClickSelectCountry(view: View) {
         val listCountry = CityHelper.getAllCountries(this)
@@ -87,7 +95,7 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
             listCountry,
             activityEditAdsBinding.textViewSelectCountry
         )
-        activityEditAdsBinding.textViewSelectCountry.setTextColor(Color.RED)
+        activityEditAdsBinding.textViewSelectCountry.setTextColor(Color.WHITE)
         if (activityEditAdsBinding.textViewSelectCity.text.toString() != getString(R.string.select_city)) {
             activityEditAdsBinding.textViewSelectCity.setText(R.string.select_city)
         }
@@ -105,6 +113,17 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
         } else {
             activityEditAdsBinding.textViewSelectCountry.setTextColor(Color.RED)
         }
+    }
+
+    fun onClickSelectTypeMoney() {
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            this, R.array.typeMoney,
+            android.R.layout.simple_spinner_item
+        )
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        activityEditAdsBinding.spinnerSelectTypeMoney.adapter = spinnerAdapter
+        activityEditAdsBinding.spinnerSelectTypeMoney.setSelection(1)
+
     }
 
     fun onClickSelectTypeInstrument(view: View) {
@@ -162,6 +181,7 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
                 textViewSelectTypeInstrument.text.toString(),
                 editTextNameInstrument.text.toString(),
                 editTextPrice.text.toString(),
+                spinnerSelectTypeMoney.selectedItem.toString(),
                 editTextDescriptionInstrument.text.toString(),
                 "empty",
                 "empty",

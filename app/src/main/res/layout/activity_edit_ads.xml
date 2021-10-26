@@ -117,7 +117,8 @@
                         android:onClick="onClickSelectCountry"
                         android:padding="10dp"
                         android:text="@string/select_country"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/colorAccent"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -147,7 +148,8 @@
                         android:onClick="onClickSelectCity"
                         android:padding="10dp"
                         android:text="@string/select_city"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/colorAccent"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -179,8 +181,8 @@
                         android:hint="@string/telephone_number"
                         android:inputType="phone"
                         android:padding="10dp"
-                        android:textColor="@color/colorAccent"
-                        android:textColorHint="@color/colorAccent" />
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/colorAccent"/>
 
                     <LinearLayout
                         android:id="@+id/divider3"
@@ -225,8 +227,9 @@
                         android:layout_height="wrap_content"
                         android:onClick="onClickSelectTypeInstrument"
                         android:padding="10dp"
-                        android:text="@string/select_type_instrument"
-                        android:textColor="@color/colorAccent"
+                        android:hint="@string/select_type_instrument"
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/colorAccent"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -257,7 +260,7 @@
                         android:ems="10"
                         android:hint="@string/name_instrument_hint"
                         android:padding="10dp"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/primaryText"
                         android:textColorHint="@color/colorAccent" />
 
                     <LinearLayout
@@ -275,11 +278,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:inputType="number"
                         android:text="@string/price_instrument"
-
                         android:textColor="@color/primaryText"
                         android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/editTextPrice"
@@ -287,11 +293,26 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:ems="10"
+                        android:layout_weight="1"
                         android:hint="@string/price_instrument_hint"
+                        android:inputType="number"
                         android:padding="10dp"
-                        android:textColor="@color/colorAccent"
-                        android:textColorHint="@color/colorAccent" />
+                        android:textColor="@color/primaryText"
+                        android:textColorHint="@color/colorAccent"/>
 
+                    <Spinner
+                        android:id="@+id/spinnerSelectTypeMoney"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:dropDownWidth="70dp"
+                        android:entries="@array/typeMoney"
+                        android:textAlignment="center"
+                        android:textColor="@color/primaryText"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
                     <LinearLayout
                         android:id="@+id/divider03"
                         android:layout_width="match_parent"
