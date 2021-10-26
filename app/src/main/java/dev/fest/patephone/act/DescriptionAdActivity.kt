@@ -71,8 +71,8 @@ class DescriptionAdActivity : AppCompatActivity() {
         iEmail.type = "message/rfc822"
         iEmail.apply {
             putExtra(Intent.EXTRA_EMAIL, arrayOf(ad?.email))
-            putExtra(Intent.EXTRA_SUBJECT, "Объявление ${ad?.type}")
-            putExtra(Intent.EXTRA_TEXT, "Здравствуйте, меня интересует объявление ${ad?.type}!")
+            putExtra(Intent.EXTRA_SUBJECT, "Объявление ${ad?.nameInstrument}")
+            putExtra(Intent.EXTRA_TEXT, "Здравствуйте, меня интересует объявление ${ad?.nameInstrument}!")
         }
         try {
             startActivity(Intent.createChooser(iEmail, "Открыть с "))

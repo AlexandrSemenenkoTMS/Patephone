@@ -14,6 +14,7 @@ data class Resume(
     val descriptionResume: String? = null,
     val imageResume: String? = null,
     val uid: String? = null,
+    val time: String = "0",
 
     var favCounter: String = "0",
     var isFav: Boolean = false,

@@ -15,6 +15,7 @@ class DbManager {
     val dbStorage = Firebase.storage.getReference(MAIN_NODE)
     val auth = Firebase.auth
 
+
     fun publishAd(ad: Ad, finishWorkListener: FinishWorkListener) {
         if (auth.uid != null) db.child(ad.key ?: "empty")
             .child(auth.uid!!)
@@ -25,6 +26,23 @@ class DbManager {
                 db.child(ad.key ?: "empty")
                     .child(FILTER_AD_NODE)
                     .setValue(adFilter)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) finishWorkListener.onFinish()
+                    }
+            }
+    }
+
+    fun publishResume(resume: Resume, finishWorkListener: FinishWorkListener) {
+        if (auth.uid != null) db.child(resume.keyResume ?: "empty")
+            .child(auth.uid!!)
+            .child(RESUME_NODE)
+            .setValue(resume)
+            .addOnCompleteListener {
+                val resumeFilter =
+                    ResumeFilter(resume.time, "${resume.namePersonResume}_${resume.time}")
+                db.child(resume.keyResume ?: "empty")
+                    .child(FILTER_RESUME_NODE)
+                    .setValue(resumeFilter)
                     .addOnCompleteListener {
                         if (it.isSuccessful) finishWorkListener.onFinish()
                     }
@@ -89,11 +107,15 @@ class DbManager {
     }
 
     fun getAllAdsFromTypeFirstPage(type: String, readDataCallback: ReadDataCallback) {
-        val query = db.orderByChild(PATH_FILTER_TYPE_TIME_AD).startAfter(type).endAt(type + "_\uf8ff").limitToLast(ADS_LIMIT)
+        val query =
+            db.orderByChild(PATH_FILTER_TYPE_TIME_AD).startAfter(type).endAt(type + "_\uf8ff")
+                .limitToLast(ADS_LIMIT)
         readDataFromDb(query, readDataCallback)
     }
+
     fun getAllAdsFromTypeNextPage(typeTime: String, readDataCallback: ReadDataCallback) {
-        val query = db.orderByChild(PATH_FILTER_TYPE_TIME_AD).endBefore(typeTime).limitToFirst(ADS_LIMIT)
+        val query =
+            db.orderByChild(PATH_FILTER_TYPE_TIME_AD).endBefore(typeTime).limitToFirst(ADS_LIMIT)
         readDataFromDb(query, readDataCallback)
     }
 
@@ -154,9 +176,13 @@ class DbManager {
 
     companion object {
         const val AD_NODE = "ad"
+        const val RESUME_NODE = "resume"
         const val FILTER_AD_NODE = "adFilter"
         const val PATH_FILTER_TIME_AD = "/adFilter/time"
         const val PATH_FILTER_TYPE_TIME_AD = "/adFilter/typeTime"
+        const val FILTER_RESUME_NODE = "resumeFilter"
+        const val PATH_FILTER_TIME_RESUME = "/resumeFilter/time"
+        const val PATH_FILTER_TYPE_TIME_RESUME = "/resumeFilter/typeTime"
         const val MAIN_NODE = "main"
         const val INFO_NODE = "info"
         const val FAVS_NODE = "favs"

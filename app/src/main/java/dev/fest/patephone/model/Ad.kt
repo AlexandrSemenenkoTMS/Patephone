@@ -10,6 +10,7 @@ data class Ad(
     val type: String? = null,
     val nameInstrument: String? = null,
     val price: String? = null,
+    val typeMoney: String? = null,
     val description: String? = null,
     val mainImage: String? = null,
     val image2: String? = null,
