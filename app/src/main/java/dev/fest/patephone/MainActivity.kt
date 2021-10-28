@@ -37,7 +37,7 @@ import dev.fest.patephone.dialoghelper.DialogHelper
 import dev.fest.patephone.model.Ad
 import dev.fest.patephone.viewmodel.FirebaseViewModel
 
-
+//  а эти активити не достойны находиться в пакетк act? (=
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     AdAdapter.AdHolder.ItemListener {
 

@@ -83,12 +83,20 @@ class AdAdapter(val activity: MainActivity) : RecyclerView.Adapter<AdAdapter.AdH
             }
         }
 
+        // название метода целиком, такие сокращения выглядят неоправдано
         private fun isFav(ad: Ad) {
             if (ad.isFav) {
                 binding.imageButtonFavourite.setImageResource(R.drawable.ic_favourite_pressed)
             } else {
                 binding.imageButtonFavourite.setImageResource(R.drawable.ic_favourite_normal)
             }
+            // можно заменить на:
+/*            val icon = if (ad.isFav) {
+                R.drawable.ic_favourite_pressed
+            } else {
+                R.drawable.ic_favourite_normal
+            }
+            binding.imageButtonFavourite.setImageResource(icon)*/
         }
 
         private fun onClickEdit(ad: Ad): View.OnClickListener {

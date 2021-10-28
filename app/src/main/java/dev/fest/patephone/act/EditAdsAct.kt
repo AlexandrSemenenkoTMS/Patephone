@@ -25,6 +25,7 @@ import dev.fest.patephone.utils.ImageManager.fillImageArray
 import dev.fest.patephone.utils.ImagePicker
 import java.io.ByteArrayOutputStream
 
+// если это Activity,то в названии точно должно быть Activity
 class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
 
     var chooseImageFragment: ImageListFragment? = null
@@ -52,7 +53,7 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
         if (isEditState) {
             ad = intent.getSerializableExtra(MainActivity.AD_DATA) as Ad
             if (ad != null) fillViews(ad!!)
-            activityEditAdsBinding.buttonAddAd.text = "Применить"
+            activityEditAdsBinding.buttonAddAd.text = "Применить" // ресурсы!!
         }
     }
 
