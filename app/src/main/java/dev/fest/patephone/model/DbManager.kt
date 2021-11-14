@@ -1,5 +1,6 @@
 package dev.fest.patephone.model
 
+import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -8,6 +9,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import dev.fest.patephone.utils.FilterManager
 
 class DbManager {
 
@@ -15,15 +17,15 @@ class DbManager {
     val dbStorage = Firebase.storage.getReference(MAIN_NODE)
     val auth = Firebase.auth
 
-
     fun publishAd(ad: Ad, finishWorkListener: FinishWorkListener) {
-        if (auth.uid != null) db.child(ad.key ?: "empty")
+        if (auth.uid != null) db.child(ad.adKey ?: EMPTY)
             .child(auth.uid!!)
             .child(AD_NODE)
             .setValue(ad)
             .addOnCompleteListener {
-                val adFilter = AdFilter(ad.time, "${ad.type}_${ad.time}")
-                db.child(ad.key ?: "empty")
+                val adFilter = FilterManager.createFilter(ad)
+//                AdFilter(ad.time, "${ad.type}_${ad.time}")
+                db.child(ad.adKey ?: EMPTY)
                     .child(FILTER_AD_NODE)
                     .setValue(adFilter)
                     .addOnCompleteListener {
@@ -33,14 +35,14 @@ class DbManager {
     }
 
     fun publishResume(resume: Resume, finishWorkListener: FinishWorkListener) {
-        if (auth.uid != null) db.child(resume.keyResume ?: "empty")
+        if (auth.uid != null) db.child(resume.keyResume ?: EMPTY)
             .child(auth.uid!!)
             .child(RESUME_NODE)
             .setValue(resume)
             .addOnCompleteListener {
                 val resumeFilter =
                     ResumeFilter(resume.time, "${resume.namePersonResume}_${resume.time}")
-                db.child(resume.keyResume ?: "empty")
+                db.child(resume.keyResume ?: EMPTY)
                     .child(FILTER_RESUME_NODE)
                     .setValue(resumeFilter)
                     .addOnCompleteListener {
@@ -52,33 +54,39 @@ class DbManager {
     fun adViewed(ad: Ad) {
         var counter = ad.viewsCounter.toInt()
         counter++
-        if (auth.uid != null) db.child(ad.key ?: "empty")
+        if (auth.uid != null) db.child(ad.adKey ?: EMPTY)
             .child(INFO_NODE)
             .setValue(InfoItem(counter.toString(), ad.emailsCounter, ad.callsCounter))
     }
 
+//    fun placeViewed(ad: Ad) {
+//        var country = ad.country
+//        var city = ad.city
+//        if(country.isNullOrEmpty() && city.isNullOrEmpty())
+//    }
+
     fun onFavClick(ad: Ad, finishWorkListener: FinishWorkListener) {
-        if (ad.isFav) {
-            removeFromFavs(ad, finishWorkListener)
+        if (ad.isFavourite) {
+            removeFromFavourites(ad, finishWorkListener)
         } else {
-            addToFavs(ad, finishWorkListener)
+            addToFavourites(ad, finishWorkListener)
         }
     }
 
-    private fun addToFavs(ad: Ad, finishWorkListener: FinishWorkListener) {
-        ad.key?.let {
+    private fun addToFavourites(ad: Ad, finishWorkListener: FinishWorkListener) {
+        ad.adKey?.let {
             auth.uid?.let { uid ->
-                db.child(it).child(FAVS_NODE).child(uid).setValue(uid).addOnCompleteListener {
+                db.child(it).child(FAVOURITES_NODE).child(uid).setValue(uid).addOnCompleteListener {
                     if (it.isSuccessful) finishWorkListener.onFinish()
                 }
             }
         }
     }
 
-    private fun removeFromFavs(ad: Ad, finishWorkListener: FinishWorkListener) {
-        ad.key?.let {
+    private fun removeFromFavourites(ad: Ad, finishWorkListener: FinishWorkListener) {
+        ad.adKey?.let {
             auth.uid?.let { uid ->
-                db.child(it).child(FAVS_NODE).child(uid).removeValue().addOnCompleteListener {
+                db.child(it).child(FAVOURITES_NODE).child(uid).removeValue().addOnCompleteListener {
                     if (it.isSuccessful) finishWorkListener.onFinish()
                 }
             }
@@ -91,14 +99,25 @@ class DbManager {
         readDataFromDb(query, readDataCallback)
     }
 
-    fun getMyFavs(readDataCallback: ReadDataCallback) {
+    fun getMyFavourites(readDataCallback: ReadDataCallback) {
         val query = db.orderByChild("/favs/${auth.uid}").equalTo(auth.uid)
         readDataFromDb(query, readDataCallback)
     }
 
-    fun getAllAdsFirstPage(readDataCallback: ReadDataCallback) {
-        val query = db.orderByChild(PATH_FILTER_TIME_AD).limitToLast(ADS_LIMIT)
+    fun getAllAdsFirstPage(filter: String, readDataCallback: ReadDataCallback) {
+        val query = if (filter.isEmpty()) {
+            db.orderByChild(PATH_FILTER_TIME_AD).limitToLast(ADS_LIMIT)
+        } else {
+            getAllAdsByFilterFirstPage(filter)
+        }
         readDataFromDb(query, readDataCallback)
+    }
+
+    private fun getAllAdsByFilterFirstPage(tempFilter: String): Query {
+        val orderBy = tempFilter.split(DELIMITER)[0]
+        val filter = tempFilter.split(DELIMITER)[1]
+        return db.orderByChild("/adFilter/$orderBy").startAfter(filter).endAt(filter + "\uf8ff")
+            .limitToLast(ADS_LIMIT)
     }
 
     fun getAllAdsNextPage(time: String, readDataCallback: ReadDataCallback) {
@@ -106,11 +125,27 @@ class DbManager {
         readDataFromDb(query, readDataCallback)
     }
 
-    fun getAllAdsFromTypeFirstPage(type: String, readDataCallback: ReadDataCallback) {
+    fun getAllAdsFromTypeFirstPage(
+        type: String,
+        filter: String,
+        readDataCallback: ReadDataCallback
+    ) {
         val query =
-            db.orderByChild(PATH_FILTER_TYPE_TIME_AD).startAfter(type).endAt(type + "_\uf8ff")
-                .limitToLast(ADS_LIMIT)
+            if (filter.isEmpty()) {
+                db.orderByChild(PATH_FILTER_TYPE_TIME_AD).startAfter(type).endAt(type + "_\uf8ff")
+                    .limitToLast(ADS_LIMIT)
+            } else {
+                getAllAdsFromTypeByFilterFirstPage(type, filter)
+            }
         readDataFromDb(query, readDataCallback)
+    }
+
+    private fun getAllAdsFromTypeByFilterFirstPage(type: String, tempFilter: String): Query {
+        val orderBy = "type_" + tempFilter.split(DELIMITER)[0]
+        val filter = type + "_" + tempFilter.split(DELIMITER)[1]
+        Log.d("DbManager", "filter: ${filter}, orderBy: $orderBy")
+        return db.orderByChild("/adFilter/$orderBy").startAfter(filter).endAt(filter + "\uf8ff")
+            .limitToLast(ADS_LIMIT)
     }
 
     fun getAllAdsFromTypeNextPage(typeTime: String, readDataCallback: ReadDataCallback) {
@@ -120,8 +155,8 @@ class DbManager {
     }
 
     fun deleteAd(ad: Ad, finishWorkListener: FinishWorkListener) {
-        if (ad.key == null || ad.uid == null) return
-        db.child(ad.key).child(ad.uid).removeValue()
+        if (ad.adKey == null || ad.uid == null) return
+        db.child(ad.adKey).child(ad.uid).removeValue()
             .addOnCompleteListener {
 //                if (it.isSuccessful)
                 finishWorkListener.onFinish()
@@ -142,18 +177,18 @@ class DbManager {
                     }
 
                     val infoItem = item.child(INFO_NODE).getValue(InfoItem::class.java)
-                    val favCounter = item.child(FAVS_NODE).childrenCount
+                    val favCounter = item.child(FAVOURITES_NODE).childrenCount
                     val isFav = auth.uid?.let {
-                        item.child(FAVS_NODE).child(it).getValue(String::class.java)
+                        item.child(FAVOURITES_NODE).child(it).getValue(String::class.java)
                     }
 
-                    ad?.isFav = isFav != null
+                    ad?.isFavourite = isFav != null
 
                     ad?.favCounter = favCounter.toString()
 
-                    ad?.viewsCounter = infoItem?.viewsCounter ?: "0"
-                    ad?.emailsCounter = infoItem?.emailsCounter ?: "0"
-                    ad?.callsCounter = infoItem?.callsCounter ?: "0"
+                    ad?.viewsCounter = infoItem?.viewsCounter ?: DEFAULT_COUNTER
+                    ad?.emailsCounter = infoItem?.emailsCounter ?: DEFAULT_COUNTER
+                    ad?.callsCounter = infoItem?.callsCounter ?: DEFAULT_COUNTER
 
                     if (ad != null) adArray.add(ad!!)
 
@@ -179,13 +214,16 @@ class DbManager {
         const val RESUME_NODE = "resume"
         const val FILTER_AD_NODE = "adFilter"
         const val PATH_FILTER_TIME_AD = "/adFilter/time"
-        const val PATH_FILTER_TYPE_TIME_AD = "/adFilter/typeTime"
+        const val PATH_FILTER_TYPE_TIME_AD = "/adFilter/type_time"
         const val FILTER_RESUME_NODE = "resumeFilter"
         const val PATH_FILTER_TIME_RESUME = "/resumeFilter/time"
-        const val PATH_FILTER_TYPE_TIME_RESUME = "/resumeFilter/typeTime"
+        const val PATH_FILTER_TYPE_TIME_RESUME = "/resumeFilter/type_time"
         const val MAIN_NODE = "main"
         const val INFO_NODE = "info"
-        const val FAVS_NODE = "favs"
+        const val FAVOURITES_NODE = "favs"
         const val ADS_LIMIT = 10
+        const val DEFAULT_COUNTER = "0"
+        const val DELIMITER = "|"
+        const val EMPTY = "empty"
     }
 }

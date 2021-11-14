@@ -11,8 +11,12 @@ class FirebaseViewModel : ViewModel() {
 
     val liveDataAd = MutableLiveData<ArrayList<Ad>>()
 
-    fun loadAllAdsFirstPage() {
-        dbManager.getAllAdsFirstPage(object : DbManager.ReadDataCallback {
+//    private val compositeDisposable = CompositeDisposable()
+////    private val productDao by lazy {getApplication<AdApp>().database.getAdDao() }
+//    private val productsList = mutableListOf<Ad>()
+
+    fun loadAllAdsFirstPage(filter:String) {
+        dbManager.getAllAdsFirstPage(filter, object : DbManager.ReadDataCallback {
             override fun readData(list: ArrayList<Ad>) {
                 liveDataAd.value = list
             }
@@ -27,8 +31,8 @@ class FirebaseViewModel : ViewModel() {
         })
     }
 
-    fun loadAllAdsFromType(type: String) {
-        dbManager.getAllAdsFromTypeFirstPage(type, object : DbManager.ReadDataCallback {
+    fun loadAllAdsFromType(type: String,filter: String) {
+        dbManager.getAllAdsFromTypeFirstPage(type, filter, object : DbManager.ReadDataCallback {
             override fun readData(list: ArrayList<Ad>) {
                 liveDataAd.value = list
             }
@@ -43,7 +47,7 @@ class FirebaseViewModel : ViewModel() {
         })
     }
 
-    fun onFavClick(ad: Ad) {
+    fun onFavouriteClick(ad: Ad) {
         dbManager.onFavClick(ad, object : DbManager.FinishWorkListener {
             override fun onFinish() {
                 val updatedList = liveDataAd.value
@@ -51,9 +55,9 @@ class FirebaseViewModel : ViewModel() {
                 if (pos != -1) {
                     pos?.let {
                         val favCounter =
-                            if (ad.isFav) ad.favCounter.toInt() - 1 else ad.favCounter.toInt() + 1
+                            if (ad.isFavourite) ad.favCounter.toInt() - 1 else ad.favCounter.toInt() + 1
                         updatedList[pos] = updatedList[pos].copy(
-                            isFav = !ad.isFav,
+                            isFavourite = !ad.isFavourite,
                             favCounter = favCounter.toString()
                         )
                     }
@@ -77,7 +81,7 @@ class FirebaseViewModel : ViewModel() {
     }
 
     fun loadMyFavs() {
-        dbManager.getMyFavs(object : DbManager.ReadDataCallback {
+        dbManager.getMyFavourites(object : DbManager.ReadDataCallback {
             override fun readData(list: ArrayList<Ad>) {
                 liveDataAd.value = list
             }
@@ -91,7 +95,6 @@ class FirebaseViewModel : ViewModel() {
                 updatedList?.remove(ad)
                 liveDataAd.postValue(updatedList!!)
             }
-
         })
     }
 }

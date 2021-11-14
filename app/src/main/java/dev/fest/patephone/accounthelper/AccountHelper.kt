@@ -1,18 +1,15 @@
 package dev.fest.patephone.accounthelper
 
 import android.util.Log
-import android.view.MenuItem
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.*
-import dev.fest.patephone.MainActivity
+import dev.fest.patephone.LoginActivity
+import dev.fest.patephone.activity.MainActivity
 import dev.fest.patephone.R
 import dev.fest.patephone.constants.FirebaseAuthConst
-import dev.fest.patephone.databinding.SignDialogBinding
-import dev.fest.patephone.dialoghelper.DialogHelper
 import java.lang.Exception
 
 
@@ -21,9 +18,7 @@ class AccountHelper(activity: MainActivity)  {
     private val activityAccountHelper = activity
     private lateinit var signInClient: GoogleSignInClient
 
-    fun signUpWithEmail(
-        email: String, password: String,
-    ) {
+    fun signUpWithEmail(email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             activityAccountHelper.mAuth.currentUser?.delete()?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -72,7 +67,6 @@ class AccountHelper(activity: MainActivity)  {
             }
         }
     }
-
 
     fun signInWithEmail(email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty()) {

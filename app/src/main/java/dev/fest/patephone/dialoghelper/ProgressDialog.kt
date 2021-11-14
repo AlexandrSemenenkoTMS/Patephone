@@ -3,7 +3,6 @@ package dev.fest.patephone.dialoghelper
 import android.app.Activity
 import android.app.AlertDialog
 import dev.fest.patephone.databinding.ProgressDialogLayoutBinding
-import dev.fest.patephone.databinding.SignDialogBinding
 
 object ProgressDialog {
 

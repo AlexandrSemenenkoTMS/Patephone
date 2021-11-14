@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Default" parent="ThemeOverlay.MaterialComponents.Dark">
+    <style name="AppTheme.Patephone" parent="Theme.MaterialComponents">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorSecondary</item>
@@ -13,12 +13,76 @@
         <item name="myTabIndicatorColor">@color/tabIndicatorColor</item>
         <item name="myPrimaryTextColor">@color/primaryText</item>
         <item name="mySecondaryTextColor">@color/secondaryText</item>
-        <item name="android:theme">@style/Default</item>
     </style>
 
-    <style name="AppTheme.ActionBarCustom">
-        <!-- Primary brand color. -->
-        <item name="android:textColorSecondary">@color/colorPrimary</item>
+    <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.CustomActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="titleTextColor">@color/secondaryText</item>
+    </style>
+
+    <style name="TextViewPrimaryAdItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="TextViewSecondaryAdItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="TextViewPrimaryAdDescription">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="TextViewSecondaryAdDescription">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="LinearLayoutVertical">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">8dp</item>
+        <item name="background">@color/backgroundColor</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="LinearLayoutHorizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="backgroundTint">@color/backgroundColor</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>

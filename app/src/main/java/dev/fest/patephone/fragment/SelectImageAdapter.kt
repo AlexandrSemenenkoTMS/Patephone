@@ -2,18 +2,11 @@ package dev.fest.patephone.fragment
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.media.Image
-import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.fest.patephone.R
-import dev.fest.patephone.act.EditAdsAct
+import dev.fest.patephone.activity.EditAdsActivity
 import dev.fest.patephone.databinding.SelectImageFragmentItemBinding
 import dev.fest.patephone.utils.AdapterCallback
 import dev.fest.patephone.utils.ImageManager
@@ -66,7 +59,7 @@ class SelectImageAdapter(val adapterCallback: AdapterCallback) :
 
         fun setData(bitmap: Bitmap) {
             viewBinding.imageButtonEdit.setOnClickListener {
-                ImagePicker.getSingleImage(context as EditAdsAct)
+                ImagePicker.getSingleImage(context as EditAdsActivity)
                 context.editImagePosition = adapterPosition
             }
 

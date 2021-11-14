@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="typeInstrument">
-        <item>Гитары</item>
-        <item>Клавишные</item>
-        <item>Струнные</item>
-        <item>Ударные</item>
-        <item>Духовые</item>
-        <item>Аксессуары</item>
-        <item>Прочее</item>
+        <item>@string/ad_title_sale_guitar</item>
+        <item>@string/ad_title_sale_keyboards</item>
+        <item>@string/ad_title_sale_strings</item>
+        <item>@string/ad_title_sale_drums</item>
+        <item>@string/ad_title_sale_spiritual</item>
+        <item>@string/ad_title_sale_accessories</item>
+        <item>@string/ad_title_sale_other</item>
     </string-array>
 </resources>

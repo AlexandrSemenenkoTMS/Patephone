@@ -1,9 +1,6 @@
 package dev.fest.patephone.utils
 
 import android.content.Context
-import android.widget.Toast
-import dev.fest.patephone.remote.CityApiClient
-import dev.fest.patephone.remote.CityApiService
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
@@ -12,8 +9,9 @@ import kotlin.collections.ArrayList
 
 object CityHelper {
 
+
     fun getAllCountries(context: Context): ArrayList<String> {
-        var tempArray = ArrayList<String>()
+        val tempArray = ArrayList<String>()
         try {
 //            val inputStream: InputStream = context.assets.open("citiesOfBelarus.json")
             val inputStream: InputStream = context.assets.open("countriesToCities.json")
@@ -37,7 +35,7 @@ object CityHelper {
     }
 
     fun getAllCities(country: String, context: Context): ArrayList<String> {
-        var tempArray = ArrayList<String>()
+        val tempArray = ArrayList<String>()
         try {
 //            val inputStream: InputStream = context.assets.open("citiesOfBelarus.json")
             val inputStream: InputStream = context.assets.open("countriesToCities.json")

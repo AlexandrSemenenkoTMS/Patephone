@@ -3,14 +3,14 @@ package dev.fest.patephone.dialoghelper
 import android.app.AlertDialog
 import android.view.View
 import android.widget.Toast
-import dev.fest.patephone.MainActivity
-import dev.fest.patephone.R
+import dev.fest.patephone.activity.MainActivity
 import dev.fest.patephone.accounthelper.AccountHelper
 import dev.fest.patephone.databinding.SignDialogBinding
+import dev.fest.patephone.R
+
 
 class DialogHelper(val activity: MainActivity) {
     val accountHelper = AccountHelper(activity)
-
     fun createSignDialog(index: Int) {
         val builder = AlertDialog.Builder(activity)
         val bindingDialogHelper = SignDialogBinding.inflate(activity.layoutInflater)
@@ -19,7 +19,7 @@ class DialogHelper(val activity: MainActivity) {
 
         val dialog = builder.create()
         bindingDialogHelper.buttonSignUpIn.setOnClickListener {
-             setOnClickSignUpIn(index, bindingDialogHelper, dialog)
+            setOnClickSignUpIn(index, bindingDialogHelper, dialog)
         }
         bindingDialogHelper.buttonForgetPassword.setOnClickListener {
             setOnClickResetPassword(bindingDialogHelper, dialog)

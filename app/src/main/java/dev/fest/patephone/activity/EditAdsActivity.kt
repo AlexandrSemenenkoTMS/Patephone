@@ -1,4 +1,4 @@
-package dev.fest.patephone.act
+package dev.fest.patephone.activity
 
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -7,13 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import dev.fest.patephone.MainActivity
 import dev.fest.patephone.R
 import dev.fest.patephone.adapters.ImageAdapter
 import dev.fest.patephone.model.Ad
@@ -23,14 +21,14 @@ import dev.fest.patephone.dialogs.DialogSpinnerHelper
 import dev.fest.patephone.fragment.FragmentCloseInterface
 import dev.fest.patephone.fragment.ImageListFragment
 import dev.fest.patephone.utils.CityHelper
-import dev.fest.patephone.utils.ImageManager.fillImageArray
 import dev.fest.patephone.utils.ImagePicker
 import java.io.ByteArrayOutputStream
 
 import android.widget.ArrayAdapter
+import dev.fest.patephone.utils.ImageManager.fillImageArray
 
 
-class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
+class EditAdsActivity : AppCompatActivity(), FragmentCloseInterface {
 
     var chooseImageFragment: ImageListFragment? = null
     lateinit var activityEditAdsBinding: ActivityEditAdsBinding
@@ -41,7 +39,7 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
     private var imageIndex = 0
     private var isEditState = false
     private var ad: Ad? = null
-    val mAuth = Firebase.auth
+    private val mAuth = Firebase.auth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +55,10 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
         if (isEditState) {
             ad = intent.getSerializableExtra(MainActivity.AD_DATA) as Ad
             if (ad != null) fillViews(ad!!)
-            activityEditAdsBinding.buttonAddAd.text = "Применить"
+            activityEditAdsBinding.buttonAddAd.text = getString(R.string.button_apply)
         }
     }
+
 
     //проверяет состояние объявления для редактирования
     private fun isEditState(): Boolean {
@@ -73,7 +72,6 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
         textViewSelectTypeInstrument.text = ad.type
         editTextNameInstrument.setText(ad.nameInstrument)
         editTextPrice.setText(ad.price)
-//        spinnerSelectTypeMoney.selectedItem = ad.typeMoney
         editTextDescriptionInstrument.setText(ad.description)
         fillImageArray(ad, imageAdapter)
     }
@@ -82,12 +80,9 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
         imageAdapter = ImageAdapter()
         activityEditAdsBinding.viewPagerImages.adapter = imageAdapter
         onClickSelectTypeMoney()
-
     }
 
-//onClicks
-
-
+    //onClicks
     fun onClickSelectCountry(view: View) {
         val listCountry = CityHelper.getAllCountries(this)
         dialogSpinnerHelper.showSpinnerDialog(
@@ -95,7 +90,7 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
             listCountry,
             activityEditAdsBinding.textViewSelectCountry
         )
-        activityEditAdsBinding.textViewSelectCountry.setTextColor(Color.WHITE)
+        activityEditAdsBinding.textViewSelectCountry.setTextColor(Color.BLACK)
         if (activityEditAdsBinding.textViewSelectCity.text.toString() != getString(R.string.select_city)) {
             activityEditAdsBinding.textViewSelectCity.setText(R.string.select_city)
         }
@@ -115,15 +110,16 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
         }
     }
 
-    fun onClickSelectTypeMoney() {
-        val spinnerAdapter = ArrayAdapter.createFromResource(
-            this, R.array.typeMoney,
-            android.R.layout.simple_spinner_item
-        )
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        activityEditAdsBinding.spinnerSelectTypeMoney.adapter = spinnerAdapter
-        activityEditAdsBinding.spinnerSelectTypeMoney.setSelection(1)
-
+    private fun onClickSelectTypeMoney() {
+        val spinner = activityEditAdsBinding.spinnerSelectTypeMoney
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.typeMoney,
+            R.layout.spinner_style
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
+        }
     }
 
     fun onClickSelectTypeInstrument(view: View) {
@@ -150,10 +146,9 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
 
 
     fun onClickPublishAd(view: View) {
-//        ad = fillAd()
         ad = mAuth.currentUser?.let { fillAd(it) }
         if (isEditState) {
-            ad?.copy(key = ad?.key)
+            ad?.copy(adKey = ad?.adKey)
                 ?.let { dbManager.publishAd(it, onPublishFinish()) }
         } else {
             uploadImages()
@@ -169,25 +164,58 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
     }
 
     //заполнение объявки
-//    private fun fillAd(): Ad {
     private fun fillAd(user: FirebaseUser): Ad {
         val ad: Ad
         activityEditAdsBinding.apply {
+            val textPrice = if (editTextPrice.text.isNullOrEmpty()) {
+                "Договорная"
+            } else {
+                editTextPrice.text.toString()
+            }
+
+            val textTypeMoney = if (editTextPrice.text.isNullOrEmpty()) {
+                ""
+            } else {
+                spinnerSelectTypeMoney.selectedItem.toString()
+            }
+
+            val textCountry =
+                if (textViewSelectCountry.text.isNullOrEmpty() || textViewSelectCountry.text == getString(
+                        R.string.select_country
+                    )
+                ) {
+                    ""
+                } else {
+                    textViewSelectCountry.text.toString()
+                }
+            val textCity =
+                if (textViewSelectCity.text.isNullOrEmpty() || textViewSelectCity.text == getString(
+                        R.string.select_city
+                    )
+                ) {
+                    ""
+                } else {
+                    textViewSelectCity.text.toString()
+                }
+
             ad = Ad(
                 dbManager.db.push().key,
-                textViewSelectCountry.text.toString(),
-                textViewSelectCity.text.toString(),
+                textCountry,
+                textCity,
                 editTextTelephone.text.toString(),
                 textViewSelectTypeInstrument.text.toString(),
                 editTextNameInstrument.text.toString(),
-                editTextPrice.text.toString(),
-                spinnerSelectTypeMoney.selectedItem.toString(),
+                textPrice,
+                textTypeMoney,
+//                spinnerSelectTypeMoney.selectedItem.toString(),
                 editTextDescriptionInstrument.text.toString(),
                 "empty",
                 "empty",
                 "empty",
                 dbManager.auth.uid,
                 user.email.toString(),
+                user.displayName,
+                user.photoUrl.toString(),
                 System.currentTimeMillis().toString()
             )
         }
@@ -260,7 +288,6 @@ class EditAdsAct : AppCompatActivity(), FragmentCloseInterface {
                     "${position + 1}/${activityEditAdsBinding.viewPagerImages.adapter?.itemCount}"
                 activityEditAdsBinding.textViewImageCounter.text = imageCounter
             }
-
         })
     }
 }

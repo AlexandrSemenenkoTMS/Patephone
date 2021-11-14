@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object CityApiClient {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://htmlweb.ru/")
+        .baseUrl("http://geohelper.info/")
 //        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build()

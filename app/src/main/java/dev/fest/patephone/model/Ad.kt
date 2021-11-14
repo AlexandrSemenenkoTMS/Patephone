@@ -3,7 +3,7 @@ package dev.fest.patephone.model
 import java.io.Serializable
 
 data class Ad(
-    val key: String? = null,
+    val adKey: String? = null,
     val country: String? = null,
     val city: String? = null,
     val phone: String? = null,
@@ -17,10 +17,12 @@ data class Ad(
     val image3: String? = null,
     val uid: String? = null,
     val email: String? = null,
-    val time: String = "0",
+    val nameAccount: String? = null,
+    val avatarAccount: String? = null,
+    val timePublishAd: String = "0",
 
     var favCounter: String = "0",
-    var isFav: Boolean = false,
+    var isFavourite: Boolean = false,
 
     var viewsCounter: String = "0",
     var emailsCounter: String = "0",
