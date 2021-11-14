@@ -1,7 +1,6 @@
 package dev.fest.patephone.adapters
 
 import android.graphics.Bitmap
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,7 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
     override fun getItemCount() = mainList.size
 
     class  ImageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        lateinit var imageItem: ImageView
+        private lateinit var imageItem: ImageView
 
         fun setData(bitmap: Bitmap) {
             imageItem = itemView.findViewById(R.id.imageViewItem)

@@ -1,103 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/textViewSignTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/ad_sign_up"
-        android:textColor="@color/primaryText"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-    <EditText
-        android:id="@+id/editTextSignEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:hint="@string/email_hint"
-        android:inputType="textEmailAddress"
-        android:padding="10dp"
-        android:textColorHint="@color/colorAccent"
-        android:textColor="@color/primaryText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDialogMessage" />
+    </data>
 
-    <EditText
-        android:id="@+id/editTextSignPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/password_hint"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:textColorHint="@color/colorAccent"
-        android:textColor="@color/primaryText"
-        app:layout_constraintEnd_toEndOf="@+id/editTextSignEmail"
-        app:layout_constraintStart_toStartOf="@+id/editTextSignEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSignEmail" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/buttonSignInGoogle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Button"
-        app:buttonSize="icon_only"
-        app:layout_constraintEnd_toEndOf="@+id/buttonSignUpIn"
-        app:layout_constraintStart_toStartOf="@+id/buttonSignUpIn"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSignPassword" />
+        <TextView
+            android:id="@+id/textViewSignTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/ad_sign_up"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/buttonSignUpIn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="@string/sign_up_action"
-        android:textColor="@color/primaryText"
-        app:backgroundTint="@color/colorAccent"
-        app:buttonSize="standard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/editTextSignEmail"
-        app:layout_constraintStart_toStartOf="@id/editTextSignEmail"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSignInGoogle"
-        app:layout_constraintVertical_bias="0.015" />
+        <EditText
+            android:id="@+id/editTextSignEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDialogMessage" />
 
-    <Button
-        android:id="@+id/buttonForgetPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/forget_password"
-        android:visibility="gone"
-        app:backgroundTint="@color/colorAccent"
-        android:textColor="@color/primaryText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextSignEmail"
-        app:layout_constraintStart_toStartOf="@+id/editTextSignEmail"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSignUpIn" />
+        <EditText
+            android:id="@+id/editTextSignPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textColor="@color/primaryText"
+            android:textColorHint="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/editTextSignEmail"
+            app:layout_constraintStart_toStartOf="@+id/editTextSignEmail"
+            app:layout_constraintTop_toBottomOf="@+id/editTextSignEmail" />
 
-    <TextView
-        android:id="@+id/textViewDialogMessage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/sign_reset_message"
-        android:textColor="@android:color/holo_red_light"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/editTextSignEmail"
-        app:layout_constraintStart_toStartOf="@+id/editTextSignEmail"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSignTitle" />
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/buttonSignInGoogle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Button"
+            app:buttonSize="icon_only"
+            app:layout_constraintEnd_toEndOf="@+id/buttonSignUpIn"
+            app:layout_constraintStart_toStartOf="@+id/buttonSignUpIn"
+            app:layout_constraintTop_toBottomOf="@+id/editTextSignPassword" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/buttonSignUpIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="@string/sign_up_action"
+            android:textAllCaps="false"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            app:backgroundTint="@color/backgroundColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/editTextSignEmail"
+            app:layout_constraintStart_toStartOf="@id/editTextSignEmail"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSignInGoogle"
+            app:layout_constraintVertical_bias="0.015" />
+
+        <Button
+            android:id="@+id/buttonForgetPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/forget_password"
+            android:textAllCaps="false"
+            android:textColor="@color/primaryText"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:backgroundTint="@color/backgroundColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/editTextSignEmail"
+            app:layout_constraintStart_toStartOf="@+id/editTextSignEmail"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSignUpIn" />
+
+        <TextView
+            android:id="@+id/textViewDialogMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sign_reset_message"
+            android:textColor="@android:color/holo_red_light"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/editTextSignEmail"
+            app:layout_constraintStart_toStartOf="@+id/editTextSignEmail"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSignTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

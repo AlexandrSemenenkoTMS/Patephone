@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.fest.patephone.R
 
-class RecyclerViewDialogSpinnerAdapter(var textViewSelection: TextView, var dialog: AlertDialog) :
+class RecyclerViewDialogSpinnerAdapter(private var textViewSelection: TextView, private var dialog: AlertDialog) :
     RecyclerView.Adapter<RecyclerViewDialogSpinnerAdapter.SpinnerViewHolder>() {
 
     private val mainList = ArrayList<String>()
@@ -29,8 +29,8 @@ class RecyclerViewDialogSpinnerAdapter(var textViewSelection: TextView, var dial
 
     class SpinnerViewHolder(
         itemView: View,
-        var textViewSelection: TextView,
-        var dialog: AlertDialog
+        private var textViewSelection: TextView,
+        private var dialog: AlertDialog
     ) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private var itemText = ""

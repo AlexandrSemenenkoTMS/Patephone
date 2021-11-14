@@ -21,7 +21,7 @@ object ImageManager {
     private const val IMAGE_HEIGHT = 1
 
     //проверка размера изображения
-    fun getImageSize(uri: Uri, activity: Activity): List<Int> {
+    private fun getImageSize(uri: Uri, activity: Activity): List<Int> {
         val inputStream = activity.contentResolver.openInputStream(uri)
 
         val options = BitmapFactory.Options().apply {

@@ -1,17 +1,14 @@
-package dev.fest.patephone.act
+package dev.fest.patephone.activity
 
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import dev.fest.patephone.R
 import dev.fest.patephone.databinding.ActivityFilterBinding
 import dev.fest.patephone.dialogs.DialogSpinnerHelper
 import dev.fest.patephone.utils.CityHelper
-import java.lang.StringBuilder
 
 class FilterActivity : AppCompatActivity() {
     private lateinit var activityFilterBinding: ActivityFilterBinding
@@ -27,6 +24,7 @@ class FilterActivity : AppCompatActivity() {
         onClickSelectCity()
         onClickSelectTypeInstrument()
         onClickDone()
+        onClickClearFilter()
         getFilter()
     }
 
@@ -37,8 +35,7 @@ class FilterActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
-     fun onClickSelectCountry() = with(activityFilterBinding) {
+    private fun onClickSelectCountry() = with(activityFilterBinding) {
         textViewSelectCountry.setOnClickListener {
             val listCountry = CityHelper.getAllCountries(this@FilterActivity)
             dialogSpinnerHelper.showSpinnerDialog(
@@ -46,15 +43,14 @@ class FilterActivity : AppCompatActivity() {
                 listCountry,
                 textViewSelectCountry
             )
-            textViewSelectCountry.setTextColor(Color.WHITE)
+            textViewSelectCountry.setTextColor(Color.BLACK)
             if (textViewSelectCity.text.toString() != getString(R.string.select_city)) {
                 textViewSelectCity.setText(R.string.select_city)
             }
         }
-
     }
 
-     fun onClickSelectCity() = with(activityFilterBinding) {
+    private fun onClickSelectCity() = with(activityFilterBinding) {
         textViewSelectCity.setOnClickListener {
             val selectedCountry = textViewSelectCountry.text.toString()
             if (selectedCountry != getString(R.string.select_country)) {
@@ -90,7 +86,16 @@ class FilterActivity : AppCompatActivity() {
             setResult(RESULT_OK, intent)
             finish()
         }
+    }
 
+    private fun onClickClearFilter() = with(activityFilterBinding) {
+        textViewClearFilter.setOnClickListener {
+            textViewSelectCountry.text = ""
+            textViewSelectCity.text = ""
+            textViewSelectTypeInstrument.text = ""
+            editTextPrice.setText("")
+            setResult(RESULT_CANCELED)
+        }
     }
 
     private fun createFilter(): String = with(activityFilterBinding) {
@@ -108,33 +113,35 @@ class FilterActivity : AppCompatActivity() {
                 && s.isNotEmpty()
             ) {
                 stringBuilder.append(s)
-                if (i != arrayTempFilter.size - 1) stringBuilder.append("_")
+                if (i != arrayTempFilter.size - 1) stringBuilder.append(DELIMITERS)
             } else {
-                stringBuilder.append("empty")
-                if (i != arrayTempFilter.size - 1) stringBuilder.append("_")
+                stringBuilder.append(EMPTY)
+                if (i != arrayTempFilter.size - 1) stringBuilder.append(DELIMITERS)
             }
         }
         return stringBuilder.toString()
     }
 
-    fun actionBarSettings() {
+    private fun actionBarSettings() {
         val actionBar = supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = "Фильтр"
     }
 
     private fun getFilter() = with(activityFilterBinding) {
         val filter = intent.getStringExtra(FILTER_KEY)
-        if (filter != null && filter != "empty") {
-            val filterArray = filter.split("_")
-            if (filterArray[0] != getString(R.string.select_country)) textViewSelectCountry.text = filterArray[0]
-            if (filterArray[1] != getString(R.string.select_city)) textViewSelectCity.text = filterArray[1]
-            if (filterArray[2] != getString(R.string.select_type_instrument)) textViewSelectTypeInstrument.text = filterArray[2]
-            if (filterArray[3] != "empty") editTextPrice.setText(filterArray[3])
-
+        if (filter != null && filter != EMPTY) {
+            val filterArray = filter.split(DELIMITERS)
+            if (filterArray[0] != EMPTY) textViewSelectCountry.text = filterArray[0]
+            if (filterArray[1] != EMPTY) textViewSelectCity.text = filterArray[1]
+            if (filterArray[2] != EMPTY) textViewSelectTypeInstrument.text = filterArray[2]
+            if (filterArray[3] != EMPTY) editTextPrice.setText(filterArray[3])
         }
     }
 
     companion object {
         const val FILTER_KEY = "filter_key"
+        const val DELIMITERS = "_"
+        const val EMPTY = "empty"
     }
 }

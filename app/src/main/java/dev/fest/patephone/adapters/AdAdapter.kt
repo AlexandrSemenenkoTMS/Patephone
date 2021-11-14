@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import dev.fest.patephone.MainActivity
+import com.bumptech.glide.Glide
+import dev.fest.patephone.activity.MainActivity
 import dev.fest.patephone.R
-import dev.fest.patephone.act.EditAdsAct
+import dev.fest.patephone.activity.EditAdsActivity
 import dev.fest.patephone.databinding.AdListItemBinding
 import dev.fest.patephone.model.Ad
 
 class AdAdapter(val activity: MainActivity) : RecyclerView.Adapter<AdAdapter.AdHolder>() {
 
-    val arrayAd = ArrayList<Ad>() //для хранения списка  с бд
+    private val arrayAd = ArrayList<Ad>() //для хранения списка  с бд
 
     //создание шаблона с разметки
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdHolder {
@@ -26,6 +26,8 @@ class AdAdapter(val activity: MainActivity) : RecyclerView.Adapter<AdAdapter.AdH
 
     override fun onBindViewHolder(holder: AdHolder, position: Int) {
         holder.setData(arrayAd[position])
+
+
     }
 
     override fun getItemCount() = arrayAd.size
@@ -51,25 +53,29 @@ class AdAdapter(val activity: MainActivity) : RecyclerView.Adapter<AdAdapter.AdH
     class AdHolder(val binding: AdListItemBinding, val activity: MainActivity) :
         RecyclerView.ViewHolder(binding.root) {
         fun setData(ad: Ad) = with(binding) {
-//            val getCountryString = R.string.select_country.toString()
-
             textViewTitle.text = ad.nameInstrument
-//            if (textViewCountry.text == getCountryString) {
-//                textViewCountry.text = ""
-//            } else {
-//                textViewCountry.text = ad.country
-//            }
             textViewCountry.text = ad.country
             textViewCity.text = ad.city
             textViewTitlePrice.text = ad.price
-
+            textViewTitleTypeMoney.text = ad.typeMoney
             textViewViewCounter.text = ad.viewsCounter
             textViewFavourite.text = ad.favCounter
-            Picasso.get().load(ad.mainImage).into(imageViewContent)
+
+            Glide
+                .with(root)
+                .load(
+                    if (ad.mainImage == "empty") {
+                        R.drawable.ic_default_image
+                    } else {
+                        ad.mainImage
+                    }
+                )
+                .into(imageViewContent)
+
             isFav(ad)
             showEditOwnerPanel(isOwner(ad))
             mainOnClick(ad)
-//            showCountry(ad)
+            showIconPlace(ad.country, ad.city)
         }
 
         private fun mainOnClick(ad: Ad) = with(binding) {
@@ -84,16 +90,17 @@ class AdAdapter(val activity: MainActivity) : RecyclerView.Adapter<AdAdapter.AdH
         }
 
         private fun isFav(ad: Ad) {
-            if (ad.isFav) {
-                binding.imageButtonFavourite.setImageResource(R.drawable.ic_favourite_pressed)
+            val icon = if (ad.isFavourite) {
+                R.drawable.ic_favourite_pressed
             } else {
-                binding.imageButtonFavourite.setImageResource(R.drawable.ic_favourite_normal)
+                R.drawable.ic_favourite_normal
             }
+            binding.imageButtonFavourite.setImageResource(icon)
         }
 
         private fun onClickEdit(ad: Ad): View.OnClickListener {
             return View.OnClickListener {
-                val editIntent = Intent(activity, EditAdsAct::class.java).apply {
+                val editIntent = Intent(activity, EditAdsActivity::class.java).apply {
                     putExtra(MainActivity.EDIT_STATE, true)
                     putExtra(MainActivity.AD_DATA, ad)
                 }
@@ -104,23 +111,20 @@ class AdAdapter(val activity: MainActivity) : RecyclerView.Adapter<AdAdapter.AdH
         private fun isOwner(ad: Ad): Boolean {
             return ad.uid == activity.mAuth.uid
         }
-//
-//        private fun showCountry(ad: Ad) = with(binding) {
-//            if (textViewCountry.text != R.string.select_country.toString()) {
-//                textViewCountry.text = ad.country
-//                Log.d("AdAdapter", "select: ${textViewCountry.text}")
-//            } else {
-//                Log.d("AdAdapter", "not select: ${textViewCountry.text}")
-//
-//                textViewCountry.text = ""
-//            }
-//        }
 
         private fun showEditOwnerPanel(isOwner: Boolean) {
             if (isOwner) {
                 binding.editOwnerPanel.visibility = View.VISIBLE
             } else {
                 binding.editOwnerPanel.visibility = View.GONE
+            }
+        }
+
+        private fun showIconPlace(country: String?, city: String?) {
+            if (country!!.isEmpty() && city!!.isEmpty()) {
+                binding.imageViewPlace.visibility = View.GONE
+            } else {
+                binding.imageViewPlace.visibility = View.VISIBLE
             }
         }
 

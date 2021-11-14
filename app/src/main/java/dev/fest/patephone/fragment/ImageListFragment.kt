@@ -12,7 +12,7 @@ import android.widget.ProgressBar
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.fest.patephone.R
-import dev.fest.patephone.act.EditAdsAct
+import dev.fest.patephone.activity.EditAdsActivity
 import dev.fest.patephone.databinding.ListImageFragmentBinding
 import dev.fest.patephone.dialoghelper.ProgressDialog
 import dev.fest.patephone.utils.AdapterCallback
@@ -27,8 +27,8 @@ import kotlinx.coroutines.launch
 class ImageListFragment(private val fragmentCloseInterface: FragmentCloseInterface) :
     BaseAdsFragment(), AdapterCallback {
     val adapter = SelectImageAdapter(this)
-    val dragCallback = ItemTouchMoveCallback(adapter)
-    val touchHelper = ItemTouchHelper(dragCallback)
+    private val dragCallback = ItemTouchMoveCallback(adapter)
+    private val touchHelper = ItemTouchHelper(dragCallback)
     private var job: Job? = null
     private var addImageItem: MenuItem? = null
     private lateinit var binding: ListImageFragmentBinding
@@ -37,7 +37,7 @@ class ImageListFragment(private val fragmentCloseInterface: FragmentCloseInterfa
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ListImageFragmentBinding.inflate(layoutInflater)
         adView = binding.adView
         return binding.root
@@ -107,7 +107,7 @@ class ImageListFragment(private val fragmentCloseInterface: FragmentCloseInterfa
             addImageItem?.setOnMenuItemClickListener {
                 val imageCount = ImagePicker.MAX_IMAGE_COUNT - adapter.mainList.size
                 ImagePicker.addImages(
-                    activity as EditAdsAct,
+                    activity as EditAdsActivity,
                     imageCount
                 )
                 true

@@ -1,4 +1,4 @@
-package dev.fest.patephone
+package dev.fest.patephone.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -26,33 +26,33 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
+import dev.fest.patephone.R
 import dev.fest.patephone.accounthelper.AccountHelper
-import dev.fest.patephone.act.DescriptionAdActivity
-import dev.fest.patephone.act.EditAdsAct
-import dev.fest.patephone.act.FilterActivity
 import dev.fest.patephone.adapters.AdAdapter
 import dev.fest.patephone.databinding.ActivityMainBinding
 import dev.fest.patephone.dialoghelper.DialogConst
 import dev.fest.patephone.dialoghelper.DialogHelper
 import dev.fest.patephone.model.Ad
+import dev.fest.patephone.utils.DrawerMenuItemViewManager
+import dev.fest.patephone.utils.FilterManager
 import dev.fest.patephone.viewmodel.FirebaseViewModel
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     AdAdapter.AdHolder.ItemListener {
-
     private lateinit var binding: ActivityMainBinding
     private val dialogHelper = DialogHelper(this)
     private lateinit var textViewAccount: TextView
     private lateinit var imageViewAccount: ImageView
     lateinit var googleSignInLauncher: ActivityResultLauncher<Intent>
-    lateinit var filterLauncher: ActivityResultLauncher<Intent>
+    private lateinit var filterLauncher: ActivityResultLauncher<Intent>
     val mAuth = Firebase.auth
     val adapter = AdAdapter(this)
     private val firebaseViewModel: FirebaseViewModel by viewModels()
     private var clearUpdate: Boolean = true
     private var currentType: String? = null
     private var filter: String = "empty"
+    private var filterDb: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         initMainContentRecyclerView()
         initViewModel()
         scrollListener()
-        firebaseViewModel.loadAllAdsFirstPage()
+        firebaseViewModel.loadAllAdsFirstPage(filterDb)
         bottomMenuOnClick()
         onActivityResultFilter()
     }
@@ -99,6 +99,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (it.resultCode == RESULT_OK) {
                     filter = it.data?.getStringExtra(FilterActivity.FILTER_KEY)!!
                     Log.d("MyLog", "filter: $filter")
+                    Log.d("MyLog", "getFilter: ${FilterManager.getFilter(filter)}")
+                    filterDb = FilterManager.getFilter(filter)
+                } else if (it.resultCode == RESULT_CANCELED) {
+                    filterDb = ""
+                    filter = "empty"
+
                 }
             }
     }
@@ -136,7 +142,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.mainContent.toolbar.subtitle = getString(R.string.ad_all_ads)
         navViewSettings()
         onActivityResult()
-        val toogle =
+        val toggle =
             ActionBarDrawerToggle(
                 this,
                 binding.drawerLayout,
@@ -144,19 +150,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 R.string.open,
                 R.string.close
             )
-        binding.drawerLayout.addDrawerListener(toogle)
-        toogle.syncState()
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
         binding.navView.setNavigationItemSelectedListener(this)
         textViewAccount = binding.navView.getHeaderView(0).findViewById(R.id.textViewAccountEmail)
         imageViewAccount = binding.navView.getHeaderView(0).findViewById(R.id.imageViewAccountImage)
 
         binding.mainContent.floatingActionButtonFilter.setOnClickListener {
-            val intent = Intent(this, FilterActivity::class.java).apply {
+            val intent = Intent(this@MainActivity, FilterActivity::class.java).apply {
                 putExtra(FilterActivity.FILTER_KEY, filter)
             }
             filterLauncher.launch(intent)
         }
-
     }
 
     private fun bottomMenuOnClick() = with(binding) {
@@ -166,36 +171,47 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 R.id.id_home -> {
                     currentType = getString(R.string.ad_all_ads)
-                    firebaseViewModel.loadAllAdsFirstPage()
+                    firebaseViewModel.loadAllAdsFirstPage(filterDb)
                     mainContent.toolbar.title = getString(R.string.ad_title_sale)
                     mainContent.toolbar.subtitle = getString(R.string.ad_all_ads)
                 }
                 R.id.id_fav -> {
                     firebaseViewModel.loadMyFavs()
                     mainContent.toolbar.title = getString(R.string.my_favs)
+                    mainContent.toolbar.subtitle = null
                 }
                 R.id.id_add -> {
-                    val intent = Intent(this@MainActivity, EditAdsAct::class.java)
-                    startActivity(intent)
-                }
-                R.id.id_chat -> {
-                }
-                R.id.id_account -> {
+                    val intent = Intent(this@MainActivity, EditAdsActivity::class.java)
                     if (mAuth.currentUser?.isAnonymous == true || mAuth.currentUser == null) {
                         dialogHelper.createSignDialog(DialogConst.SIGN_UP_STATE)
-                    } else {
                         Toast.makeText(
                             this@MainActivity,
-                            "OK",
+                            getString(R.string.message_for_register),
                             Toast.LENGTH_LONG
                         )
                             .show()
-                    }
+                    } else startActivity(intent)
                 }
+//                R.id.id_chat -> {
+//                }
+//                R.id.id_account -> {
+//                    if (mAuth.currentUser?.isAnonymous == true || mAuth.currentUser == null) {
+////                        dialogHelper.createSignDialog(DialogConst.SIGN_UP_STATE)
+//                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+//                        startActivity(intent)
+//                    } else {
+//                        openLoginFragment()
+//                        Toast.makeText(
+//                            this@MainActivity,
+//                            "OK",
+//                            Toast.LENGTH_LONG
+//                        )
+//                            .show()
+//                    }
+//                }
             }
             true
         }
-
     }
 
     private fun initMainContentRecyclerView() {
@@ -213,7 +229,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.id_my_ads -> {
                 firebaseViewModel.loadMyAd()
                 binding.mainContent.toolbar.subtitle = getString(R.string.ad_my_ads)
-//                binding.mainContent.textViewCurrentType.text = getString(R.string.ad_my_ads)
             }
             R.id.id_sign_up -> {
                 dialogHelper.createSignDialog(DialogConst.SIGN_UP_STATE)
@@ -241,6 +256,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 binding.mainContent.toolbar.subtitle =
                     getString(R.string.ad_title_sale_keyboards)
             }
+            R.id.ad_title_sale_drums -> {
+                getAdsFromType(getString(R.string.ad_title_sale_drums))
+                binding.mainContent.toolbar.subtitle =
+                    getString(R.string.ad_title_sale_drums)
+            }
+            R.id.ad_title_sale_strings -> {
+                getAdsFromType(getString(R.string.ad_title_sale_strings))
+                binding.mainContent.toolbar.subtitle =
+                    getString(R.string.ad_title_sale_strings)
+            }
+            R.id.ad_title_sale_spiritual -> {
+                getAdsFromType(getString(R.string.ad_title_sale_spiritual))
+                binding.mainContent.toolbar.subtitle =
+                    getString(R.string.ad_title_sale_spiritual)
+            }
+            R.id.ad_title_sale_accessories -> {
+                getAdsFromType(getString(R.string.ad_title_sale_accessories))
+                binding.mainContent.toolbar.subtitle =
+                    getString(R.string.ad_title_sale_accessories)
+            }
+            R.id.ad_title_sale_other -> {
+                getAdsFromType(getString(R.string.ad_title_sale_other))
+                binding.mainContent.toolbar.subtitle =
+                    getString(R.string.ad_title_sale_other)
+            }
         }
 
         binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -249,26 +289,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun getAdsFromType(type: String) {
         currentType = type
-        firebaseViewModel.loadAllAdsFromType(type)
+        firebaseViewModel.loadAllAdsFromType(type, filterDb)
     }
 
     fun uiUpdate(user: FirebaseUser?) {
         if (user == null) {
             dialogHelper.accountHelper.signInAnonymously(object : AccountHelper.Listener {
                 override fun onComplete() {
+                    DrawerMenuItemViewManager.showItemWhenLogout(this@MainActivity)
                     textViewAccount.text = getString(R.string.title_guest)
                     imageViewAccount.setImageResource(R.drawable.ic_account_default)
                 }
             })
         } else if (user.isAnonymous) {
+            DrawerMenuItemViewManager.showItemWhenLogout(this)
             textViewAccount.text = getString(R.string.title_guest)
             imageViewAccount.setImageResource(R.drawable.ic_account_default)
         } else if (!user.isAnonymous) {
-//            textViewAccount.text = user.email
+            DrawerMenuItemViewManager.showItemWhenLogin(this)
             textViewAccount.text = user.displayName
             Picasso.get().load(user.photoUrl).into(imageViewAccount)
         }
     }
+
+//    fun openLoginFragment() {
+//        loginFragment = LoginFragment()
+//        val fm = supportFragmentManager.beginTransaction()
+//        fm.replace(R.id.placeHolder, loginFragment!!)
+//        fm.commit()
+//    }
 
     override fun onDeleteItem(ad: Ad) {
         firebaseViewModel.deleteAd(ad)
@@ -282,16 +331,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onFavClicked(ad: Ad) {
-        firebaseViewModel.onFavClick(ad)
+        firebaseViewModel.onFavouriteClick(ad)
     }
-
-//    fun onClickSelectFilter(view: View) {
-//        val listTypeInstrument = resources.getStringArray(R.array.typeInstrument).toMutableList() as ArrayList<String>
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listTypeInstrument)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.mainContent.spinner.adapter = adapter
-//
-//    }
 
     private fun navViewSettings() = with(binding) {
         val menu = navView.menu
@@ -299,10 +340,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val titleSale = menu.findItem(R.id.ad_title_sale)
         val spanTitleAccount = SpannableString(titleAccount.title)
         val spanTitleSale = SpannableString(titleSale.title)
-        spanTitleAccount.setSpan(ForegroundColorSpan
-            (ContextCompat.getColor(this@MainActivity, R.color.colorPrimary)), 0, titleAccount.title.length, 0)
-        spanTitleSale.setSpan(ForegroundColorSpan
-            (ContextCompat.getColor(this@MainActivity, R.color.colorPrimary)), 0, titleSale.title.length, 0)
+        spanTitleAccount.setSpan(
+            ForegroundColorSpan
+                (ContextCompat.getColor(this@MainActivity, R.color.colorPrimary)),
+            0,
+            titleAccount.title.length,
+            0
+        )
+        spanTitleSale.setSpan(
+            ForegroundColorSpan
+                (ContextCompat.getColor(this@MainActivity, R.color.colorPrimary)),
+            0,
+            titleSale.title.length,
+            0
+        )
         titleAccount.title = spanTitleAccount
         titleSale.title = spanTitleSale
     }
@@ -325,9 +376,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun getAdsFromType(adsList: List<Ad>) {
         adsList[0].let {
             if (currentType == getString(R.string.ad_all_ads)) {
-                firebaseViewModel.loadAllAdsNextPage(it.time)
+                firebaseViewModel.loadAllAdsNextPage(it.timePublishAd)
             } else {
-                val typeTime = "${it.type}_${it.time}"
+                val typeTime = "${it.type}_${it.timePublishAd}"
                 firebaseViewModel.loadAllAdsFromTypeNextPage(typeTime)
             }
         }

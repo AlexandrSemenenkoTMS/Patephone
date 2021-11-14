@@ -21,7 +21,9 @@
         <entry key="app/src/main/res/drawable/gradient_background_content.xml" value="0.2682291666666667" />
         <entry key="app/src/main/res/drawable/gradient_background_splash.xml" value="0.28205128205128205" />
         <entry key="app/src/main/res/drawable/gradient_splash_background.xml" value="0.38425925925925924" />
+        <entry key="app/src/main/res/drawable/ic_account_default.xml" value="0.1574074074074074" />
         <entry key="app/src/main/res/drawable/ic_add_image.xml" value="0.31435897435897436" />
+        <entry key="app/src/main/res/drawable/ic_default_image.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_delete_image.xml" value="0.31435897435897436" />
         <entry key="app/src/main/res/drawable/ic_delete_vacancy.xml" value="0.284375" />
         <entry key="app/src/main/res/drawable/ic_drag.xml" value="0.31435897435897436" />
@@ -32,35 +34,53 @@
         <entry key="app/src/main/res/drawable/ic_filter.xml" value="0.19444444444444445" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.38425925925925924" />
+        <entry key="app/src/main/res/drawable/ic_menu_add.xml" value="0.4140625" />
         <entry key="app/src/main/res/drawable/ic_menu_ads.xml" value="0.23125" />
+        <entry key="app/src/main/res/drawable/ic_place.xml" value="0.4076923076923077" />
+        <entry key="app/src/main/res/drawable/image_view_background.xml" value="0.2611111111111111" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.21614583333333334" />
+        <entry key="app/src/main/res/drawable/spinner_selector.xml" value="0.2814814814814815" />
+        <entry key="app/src/main/res/drawable/toolbar_background.xml" value="0.3489583333333333" />
         <entry key="app/src/main/res/font/caveat.xml" value="0.20277777777777778" />
         <entry key="app/src/main/res/font/nunito_extralight.xml" value="0.4027777777777778" />
+        <entry key="app/src/main/res/layout/activity_ad.xml" value="0.2890625" />
         <entry key="app/src/main/res/layout/activity_animation.xml" value="0.39791666666666664" />
-        <entry key="app/src/main/res/layout/activity_description_ad.xml" value="0.21329639889196675" />
+        <entry key="app/src/main/res/layout/activity_description_ad.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_description_vacancy.xml" value="0.2638335980395637" />
-        <entry key="app/src/main/res/layout/activity_edit_ads.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_drawer.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/activity_edit_ads.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_filter.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_handwriting.xml" value="0.22760416666666666" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2682291666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33240997229916897" />
         <entry key="app/src/main/res/layout/activity_register_from_phone.xml" value="0.31614583333333335" />
-        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.40615384615384614" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.2682291666666667" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_tab.xml" value="0.30520833333333336" />
         <entry key="app/src/main/res/layout/activity_tab_layout.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/ad_list_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/ad_list_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/add_fragment.xml" value="0.2682291666666667" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.4125" />
         <entry key="app/src/main/res/layout/fragment_ad.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_enter_code.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/fragment_enter_phone_number.xml" value="0.31614583333333335" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/layout/image_adapter_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_image_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/main_content.xml" value="0.25" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/progress_dialog_layout.xml" value="0.1" />
         <entry key="app/src/main/res/layout/select_image_fragment_item.xml" value="0.21473684210526317" />
-        <entry key="app/src/main/res/layout/sign_dialog.xml" value="0.30104166666666665" />
+        <entry key="app/src/main/res/layout/sign_dialog.xml" value="0.375" />
         <entry key="app/src/main/res/layout/spinner_layout.xml" value="0.28541666666666665" />
         <entry key="app/src/main/res/layout/spinner_list_item.xml" value="0.28541666666666665" />
+        <entry key="app/src/main/res/layout/spinner_style.xml" value="0.2972222222222222" />
+        <entry key="app/src/main/res/layout/toolbar.xml" value="0.3328125" />
         <entry key="app/src/main/res/layout/vacancy_list_item.xml" value="0.1" />
+        <entry key="app/src/main/res/menu-v26/drawer_main_menu.xml" value="0.40615384615384614" />
         <entry key="app/src/main/res/menu/bottom_main_menu.xml" value="0.25833333333333336" />
         <entry key="app/src/main/res/menu/drawer_main_menu.xml" value="0.375" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.375" />

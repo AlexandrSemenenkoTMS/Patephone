@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.view.View
 import dev.fest.patephone.R
-import dev.fest.patephone.act.EditAdsAct
+import dev.fest.patephone.activity.EditAdsActivity
 import io.ak1.pix.helpers.PixEventCallback
 import io.ak1.pix.helpers.addPixToActivity
 import io.ak1.pix.models.Mode
@@ -25,7 +25,7 @@ object ImagePicker {
         return options
     }
 
-    fun getMultiImages(editActivity: EditAdsAct, imageCounter: Int) {
+    fun getMultiImages(editActivity: EditAdsActivity, imageCounter: Int) {
         editActivity.addPixToActivity(R.id.placeHolder, getOptions(imageCounter)) { result ->
             when (result.status) {
                 PixEventCallback.Status.SUCCESS -> {
@@ -35,7 +35,7 @@ object ImagePicker {
         }
     }
 
-    fun addImages(editActivity: EditAdsAct, imageCounter: Int) {
+    fun addImages(editActivity: EditAdsActivity, imageCounter: Int) {
         editActivity.addPixToActivity(R.id.placeHolder, getOptions(imageCounter)) { result ->
             when (result.status) {
                 PixEventCallback.Status.SUCCESS -> {
@@ -46,7 +46,7 @@ object ImagePicker {
         }
     }
 
-    fun  getSingleImage(editActivity: EditAdsAct) {
+    fun  getSingleImage(editActivity: EditAdsActivity) {
         editActivity.addPixToActivity(R.id.placeHolder, getOptions(1)) { result ->
             when (result.status) {
                 PixEventCallback.Status.SUCCESS -> {
@@ -57,13 +57,13 @@ object ImagePicker {
         }
     }
 
-    private fun openChooseImageFragment(editActivity: EditAdsAct) {
+    private fun openChooseImageFragment(editActivity: EditAdsActivity) {
         editActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.placeHolder, editActivity.chooseImageFragment!!).commit()
 
     }
 
-    private fun closePixFragment(editActivity: EditAdsAct) {
+    private fun closePixFragment(editActivity: EditAdsActivity) {
         val fList = editActivity.supportFragmentManager.fragments
         fList.forEach { fragment ->
             if (fragment.isVisible) editActivity.supportFragmentManager.beginTransaction()
@@ -71,7 +71,7 @@ object ImagePicker {
         }
     }
 
-    fun getMultiSelectedImages(editActivity: EditAdsAct, uris: List<Uri>) {
+    private fun getMultiSelectedImages(editActivity: EditAdsActivity, uris: List<Uri>) {
         if (uris.size > 1 && editActivity.chooseImageFragment == null) {
             editActivity.openChooseImageFragment(uris as ArrayList<Uri>)
         } else if (uris.size == 1 && editActivity.chooseImageFragment == null) {
@@ -89,7 +89,7 @@ object ImagePicker {
         }
     }
 
-    private fun singleImage(editActivity: EditAdsAct, uri: Uri) {
+    private fun singleImage(editActivity: EditAdsActivity, uri: Uri) {
         editActivity.chooseImageFragment?.setSingleImage(uri, editActivity.editImagePosition)
     }
 }
