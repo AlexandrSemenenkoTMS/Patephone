@@ -6,7 +6,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.*
-import dev.fest.patephone.LoginActivity
 import dev.fest.patephone.activity.MainActivity
 import dev.fest.patephone.R
 import dev.fest.patephone.constants.FirebaseAuthConst
